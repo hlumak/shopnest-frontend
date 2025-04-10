@@ -1,0 +1,101 @@
+.wrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.wrapper > .left {
+  height: 100%;
+  background-color: #2563eb;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .wrapper > .left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.wrapper > .right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper > .right > .card {
+  border: none;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 380px;
+}
+
+.wrapper > .right > .card > .header {
+  text-align: center;
+  padding-bottom: 1.25rem;
+}
+
+.wrapper > .right > .card > .header > h3 {
+  padding-bottom: 0.25rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+}
+
+.wrapper > .right > .card > .content {
+  padding: 0;
+  width: 100%;
+}
+
+.wrapper > .right > .card > .content form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.wrapper > .right > .card > .content form button {
+  width: 100%;
+}
+
+.wrapper > .right > .card > .content > .social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.wrapper > .right > .card > .content > .social > button {
+  width: 100%;
+}
+
+.wrapper > .right > .card > .content > .social > button > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.wrapper > .right > .card > .footer {
+  padding: 0;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--muted-foreground);
+}
+
+.wrapper > .right > .card > .footer > button {
+  margin-left: 0.25rem;
+  color: #0284c7;
+}
