@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
-import { NO_INDEX_PAGE } from '@/constants/seo.constants'
+import { NO_INDEX_PAGE } from '@/constants/seo.constants';
 
-import { Colors } from './Colors'
+import { Colors } from './Colors';
 
 export const metadata: Metadata = {
-	title: 'Цвета',
+	title: 'Кольора',
 	...NO_INDEX_PAGE
-}
+};
 
 export default function ColorsPage() {
-	return <Colors />
+	return <Colors />;
 }

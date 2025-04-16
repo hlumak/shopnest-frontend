@@ -1,12 +1,12 @@
-import { PropsWithChildren, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { Rating } from 'react-simple-star-rating'
+import { PropsWithChildren, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Rating } from 'react-simple-star-rating';
 
-import { useCreateReview } from '@/hooks/queries/reviews/useCreateReview'
+import { useCreateReview } from '@/hooks/queries/reviews/useCreateReview';
 
-import { IReviewInput } from '@/shared/types/review.interface'
+import { IReviewInput } from '@/shared/types/review.interface';
 
-import { Button } from '../Button'
+import { Button } from '../Button';
 import {
 	Dialog,
 	DialogContent,
@@ -14,8 +14,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
-} from '../Dialog'
-import { Textarea } from '../Textarea'
+} from '../Dialog';
+import { Textarea } from '../Textarea';
 import {
 	Form,
 	FormControl,
@@ -23,50 +23,47 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage
-} from '../form-elements/Form'
+} from '../form-elements/Form';
 
 interface ReviewModalProps {
-	storeId: string
+	storeId: string;
 }
 
 export function ReviewModal({
 	children,
 	storeId
 }: PropsWithChildren<ReviewModalProps>) {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false);
 
 	const form = useForm<IReviewInput>({
 		mode: 'onChange'
-	})
+	});
 
-	const { createReview, isLoadingCreate } = useCreateReview(storeId)
+	const { createReview, isLoadingCreate } = useCreateReview(storeId);
 
 	const onSubmit: SubmitHandler<IReviewInput> = data => {
-		createReview(data)
-		form.reset()
-		setIsOpen(false)
-	}
+		createReview(data);
+		form.reset();
+		setIsOpen(false);
+	};
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
 			<DialogTrigger>{children}</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Создание отзыва</DialogTitle>
+					<DialogTitle>Створення відгуку</DialogTitle>
 					<DialogDescription>
-						Для создания отзыва необходимо указать рейтинг и текст.
+						Для створення відгуку необхідно вказати рейтинг та текст.
 					</DialogDescription>
 				</DialogHeader>
 				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className='space-y-4'
-					>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 						<FormField
 							control={form.control}
-							name='rating'
+							name="rating"
 							rules={{
-								required: 'Рейтинг обязателен'
+								required: "Рейтинг обов'язковий"
 							}}
 							render={({ field }) => (
 								<FormItem>
@@ -87,9 +84,9 @@ export function ReviewModal({
 						/>
 						<FormField
 							control={form.control}
-							name='text'
+							name="text"
 							rules={{
-								required: 'Текст обязателен'
+								required: "Текст обов'язковий"
 							}}
 							render={({ field }) => (
 								<FormItem>
@@ -97,7 +94,7 @@ export function ReviewModal({
 									<FormControl>
 										<Textarea
 											{...field}
-											placeholder='Текст отзыва'
+											placeholder="Текст відгуку"
 											disabled={isLoadingCreate}
 										/>
 									</FormControl>
@@ -106,17 +103,14 @@ export function ReviewModal({
 							)}
 						/>
 
-						<div className='flex justify-end'>
-							<Button
-								variant='primary'
-								disabled={isLoadingCreate}
-							>
-								Добавить
+						<div className="flex justify-end">
+							<Button variant="primary" disabled={isLoadingCreate}>
+								Додати
 							</Button>
 						</div>
 					</form>
 				</Form>
 			</DialogContent>
 		</Dialog>
-	)
+	);
 }

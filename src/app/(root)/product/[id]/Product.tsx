@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
 
-import { Catalog } from '@/components/ui/catalog/Catalog'
+import { Catalog } from '@/components/ui/catalog/Catalog';
 
-import { productService } from '@/services/product.service'
+import { productService } from '@/services/product.service';
 
-import { IProduct } from '@/shared/types/product.interface'
+import { IProduct } from '@/shared/types/product.interface';
 
-import styles from './Product.module.scss'
-import { ProdcutGallery } from './prodcut-gallery/ProdcutGallery'
-import { ProductInfo } from './product-info/ProductInfo'
-import { ProductReviews } from './product-reviews/ProductReviews'
+import styles from './Product.module.scss';
+import { ProdcutGallery } from './prodcut-gallery/ProdcutGallery';
+import { ProductInfo } from './product-info/ProductInfo';
+import { ProductReviews } from './product-reviews/ProductReviews';
 
 interface ProductProps {
-	initialProduct: IProduct
-	similarProducts: IProduct[]
-	id?: string
+	initialProduct: IProduct;
+	similarProducts: IProduct[];
+	id?: string;
 }
 
 export function Product({
@@ -29,7 +29,7 @@ export function Product({
 		queryFn: () => productService.getById(id),
 		initialData: initialProduct,
 		enabled: !!id
-	})
+	});
 
 	return (
 		<div className={styles.product_page}>
@@ -39,8 +39,8 @@ export function Product({
 					<ProductInfo product={product} />
 				</div>
 			</div>
-			<Catalog title='Похожие товары' products={similarProducts} />
+			<Catalog title="Схожі товари" products={similarProducts} />
 			<ProductReviews product={product} />
 		</div>
-	)
+	);
 }

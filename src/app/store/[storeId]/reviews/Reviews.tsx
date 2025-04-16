@@ -1,19 +1,19 @@
-'use client'
+'use client';
 
-import { Heading } from '@/components/ui/Heading'
-import { DataTable } from '@/components/ui/data-table/DataTable'
-import DataTableLoading from '@/components/ui/data-table/DataTableLoading'
+import { Heading } from '@/components/ui/Heading';
+import { DataTable } from '@/components/ui/data-table/DataTable';
+import DataTableLoading from '@/components/ui/data-table/DataTableLoading';
 
-import { useGetReviews } from '@/hooks/queries/reviews/useGetReviews'
+import { useGetReviews } from '@/hooks/queries/reviews/useGetReviews';
 
-import { formatDate } from '@/utils/date/format-date'
+import { formatDate } from '@/utils/date/format-date';
 
-import styles from '../Store.module.scss'
+import styles from '../Store.module.scss';
 
-import { IReviewColumn, reviewColumns } from './ReviewColumns'
+import { IReviewColumn, reviewColumns } from './ReviewColumns';
 
 export function Reviews() {
-	const { reviews, isLoading } = useGetReviews()
+	const { reviews, isLoading } = useGetReviews();
 
 	const formattedReviews: IReviewColumn[] = reviews
 		? reviews.map(review => ({
@@ -24,7 +24,7 @@ export function Reviews() {
 					.join(' '),
 				username: review.user.name
 			}))
-		: []
+		: [];
 
 	return (
 		<div className={styles.wrapper}>
@@ -34,18 +34,15 @@ export function Reviews() {
 				<>
 					<div className={styles.header}>
 						<Heading
-							title={`Отзывы (${reviews?.length})`}
-							description='Все отзывы в вашем магазине'
+							title={`Відгуки (${reviews?.length})`}
+							description="Усі відгуки в нашому магазині"
 						/>
 					</div>
 					<div className={styles.table}>
-						<DataTable
-							columns={reviewColumns}
-							data={formattedReviews}
-						/>
+						<DataTable columns={reviewColumns} data={formattedReviews} />
 					</div>
 				</>
 			)}
 		</div>
-	)
+	);
 }

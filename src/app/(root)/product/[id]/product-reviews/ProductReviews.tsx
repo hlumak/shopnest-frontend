@@ -1,36 +1,36 @@
-import { Plus, Trash } from 'lucide-react'
-import Image from 'next/image'
-import { Rating } from 'react-simple-star-rating'
+import { Plus, Trash } from 'lucide-react';
+import Image from 'next/image';
+import { Rating } from 'react-simple-star-rating';
 
-import { Button } from '@/components/ui/Button'
-import { ConfirmModal } from '@/components/ui/modals/ConfirmModal'
-import { ReviewModal } from '@/components/ui/modals/ReviewModal'
+import { Button } from '@/components/ui/Button';
+import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
+import { ReviewModal } from '@/components/ui/modals/ReviewModal';
 
-import { useDeleteReview } from '@/hooks/queries/reviews/useDeleteReview'
-import { useProfile } from '@/hooks/useProfile'
+import { useDeleteReview } from '@/hooks/queries/reviews/useDeleteReview';
+import { useProfile } from '@/hooks/useProfile';
 
-import { IProduct } from '@/shared/types/product.interface'
+import { IProduct } from '@/shared/types/product.interface';
 
-import styles from './ProductReviews.module.scss'
+import styles from './ProductReviews.module.scss';
 
 interface ProductReviewsProps {
-	product: IProduct
+	product: IProduct;
 }
 
 export function ProductReviews({ product }: ProductReviewsProps) {
-	const { user } = useProfile()
+	const { user } = useProfile();
 
-	const { deleteReview } = useDeleteReview()
+	const { deleteReview } = useDeleteReview();
 
 	return (
 		<>
 			<div className={styles.header}>
-				<h1>Отзывы</h1>
+				<h1>Відгуки</h1>
 				{user && (
 					<ReviewModal storeId={product.storeId}>
-						<Button variant='ghost'>
+						<Button variant="ghost">
 							<Plus />
-							Добавить отзыв
+							Додати відгук
 						</Button>
 					</ReviewModal>
 				)}
@@ -50,11 +50,7 @@ export function ProductReviews({ product }: ProductReviewsProps) {
 									{review.user.name}
 								</div>
 								{review.user.id === user?.id && (
-									<ConfirmModal
-										handleClick={() =>
-											deleteReview(review.id)
-										}
-									>
+									<ConfirmModal handleClick={() => deleteReview(review.id)}>
 										<button className={styles.delete}>
 											<Trash />
 										</button>
@@ -75,11 +71,9 @@ export function ProductReviews({ product }: ProductReviewsProps) {
 						</div>
 					))
 				) : (
-					<div className={styles.not_found}>
-						У этого товара нету отзывов
-					</div>
+					<div className={styles.not_found}>У цього товару немає відгуків</div>
 				)}
 			</div>
 		</>
-	)
+	);
 }

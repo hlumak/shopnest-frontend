@@ -1,11 +1,11 @@
-import { type PropsWithChildren, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { type PropsWithChildren, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useCreateStore } from '@/hooks/queries/stores/useCreateStore'
+import { useCreateStore } from '@/hooks/queries/stores/useCreateStore';
 
-import { IStoreCreate } from '@/shared/types/store.interface'
+import { IStoreCreate } from '@/shared/types/store.interface';
 
-import { Button } from '../Button'
+import { Button } from '../Button';
 import {
 	Dialog,
 	DialogContent,
@@ -13,7 +13,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
-} from '../Dialog'
+} from '../Dialog';
 import {
 	Form,
 	FormControl,
@@ -21,50 +21,47 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage
-} from '../form-elements/Form'
-import { Input } from '../form-elements/Input'
+} from '../form-elements/Form';
+import { Input } from '../form-elements/Input';
 
 export function CreateStoreModal({ children }: PropsWithChildren<unknown>) {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false);
 
-	const { createStore, isLoadingCreate } = useCreateStore()
+	const { createStore, isLoadingCreate } = useCreateStore();
 
 	const form = useForm<IStoreCreate>({
 		mode: 'onChange'
-	})
+	});
 
 	const onSubmit: SubmitHandler<IStoreCreate> = data => {
-		createStore(data)
-		setIsOpen(false)
-	}
+		createStore(data);
+		setIsOpen(false);
+	};
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogTrigger className='w-full'>{children}</DialogTrigger>
+			<DialogTrigger className="w-full">{children}</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Создание магазина</DialogTitle>
+					<DialogTitle>Створення магазину</DialogTitle>
 					<DialogDescription>
-						Для создания магазина необходимо указать название.
+						Для створення магазину необхідно вказати назву.
 					</DialogDescription>
 				</DialogHeader>
 				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit(onSubmit)}
-						className='space-y-4'
-					>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 						<FormField
 							control={form.control}
-							name='title'
+							name="title"
 							rules={{
-								required: 'Название обязательно'
+								required: "Назва обов'зякова"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Название</FormLabel>
+									<FormLabel>Назва</FormLabel>
 									<FormControl>
 										<Input
-											placeholder='Название магазина'
+											placeholder="Назва магазину"
 											disabled={isLoadingCreate}
 											{...field}
 										/>
@@ -73,17 +70,14 @@ export function CreateStoreModal({ children }: PropsWithChildren<unknown>) {
 								</FormItem>
 							)}
 						/>
-						<div className='flex justify-end'>
-							<Button
-								variant='primary'
-								disabled={isLoadingCreate}
-							>
-								Создать
+						<div className="flex justify-end">
+							<Button variant="primary" disabled={isLoadingCreate}>
+								Створити
 							</Button>
 						</div>
 					</form>
 				</Form>
 			</DialogContent>
 		</Dialog>
-	)
+	);
 }

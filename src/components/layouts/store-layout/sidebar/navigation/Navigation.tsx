@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
 	Album,
@@ -7,17 +7,17 @@ import {
 	PaintBucket,
 	Settings,
 	Star
-} from 'lucide-react'
-import { useParams } from 'next/navigation'
+} from 'lucide-react';
+import { useParams } from 'next/navigation';
 
-import { STORE_URL } from '@/config/url.config'
+import { STORE_URL } from '@/config/url.config';
 
-import { MenuItem } from './MenuItem'
-import styles from './Navigation.module.scss'
-import { IMenuItem } from './menu.interface'
+import { MenuItem } from './MenuItem';
+import styles from './Navigation.module.scss';
+import { IMenuItem } from './menu.interface';
 
 export function Navigation() {
-	const params = useParams<{ storeId: string }>()
+	const params = useParams<{ storeId: string }>();
 
 	const routes: IMenuItem[] = [
 		{
@@ -28,29 +28,29 @@ export function Navigation() {
 		{
 			icon: FolderKanban,
 			link: STORE_URL.products(params.storeId),
-			value: 'Товары'
+			value: 'Товари'
 		},
 		{
 			icon: Album,
 			link: STORE_URL.categories(params.storeId),
-			value: 'Категории'
+			value: 'Категорії'
 		},
 		{
 			icon: PaintBucket,
 			link: STORE_URL.colors(params.storeId),
-			value: 'Цвета'
+			value: 'Кольора'
 		},
 		{
 			icon: Star,
 			link: STORE_URL.reviews(params.storeId),
-			value: 'Отзывы'
+			value: 'Відгуки'
 		},
 		{
 			icon: Settings,
 			link: STORE_URL.settings(params.storeId),
-			value: 'Настройки магазина'
+			value: 'Налаштування магазину'
 		}
-	]
+	];
 
 	return (
 		<div className={styles.wrapper}>
@@ -60,5 +60,5 @@ export function Navigation() {
 				))}
 			</div>
 		</div>
-	)
+	);
 }

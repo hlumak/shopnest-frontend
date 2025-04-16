@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import { Catalog } from '@/components/ui/catalog/Catalog'
+import { Catalog } from '@/components/ui/catalog/Catalog';
 
-import { useProfile } from '@/hooks/useProfile'
+import { useProfile } from '@/hooks/useProfile';
 
 export function Favorites() {
-	const { user } = useProfile()
+	const { user } = useProfile();
 
-	if (!user) return null
+	if (!user) return null;
 
 	return (
-		<div className='my-6'>
-			<Catalog title='Избранное' products={user.favorites} />
+		<div className="my-6">
+			<Catalog title="Обране" products={user.favorites} />
 		</div>
-	)
+	);
 }

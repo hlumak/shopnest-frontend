@@ -1,8 +1,8 @@
-import { Trash } from 'lucide-react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Trash } from 'lucide-react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui/Button'
-import { Heading } from '@/components/ui/Heading'
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
 import {
 	Select,
 	SelectContent,
@@ -10,8 +10,8 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue
-} from '@/components/ui/Select'
-import { Textarea } from '@/components/ui/Textarea'
+} from '@/components/ui/Select';
+import { Textarea } from '@/components/ui/Textarea';
 import {
 	Form,
 	FormControl,
@@ -19,37 +19,37 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage
-} from '@/components/ui/form-elements/Form'
-import { Input } from '@/components/ui/form-elements/Input'
-import { ImageUpload } from '@/components/ui/form-elements/image-upload/ImageUpload'
-import { ConfirmModal } from '@/components/ui/modals/ConfirmModal'
+} from '@/components/ui/form-elements/Form';
+import { Input } from '@/components/ui/form-elements/Input';
+import { ImageUpload } from '@/components/ui/form-elements/image-upload/ImageUpload';
+import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
 
-import { useCreateProduct } from '@/hooks/queries/products/useCreateProduct'
-import { useDeleteProduct } from '@/hooks/queries/products/useDeleteProduct'
-import { useUpdateProduct } from '@/hooks/queries/products/useUpdateProduct'
+import { useCreateProduct } from '@/hooks/queries/products/useCreateProduct';
+import { useDeleteProduct } from '@/hooks/queries/products/useDeleteProduct';
+import { useUpdateProduct } from '@/hooks/queries/products/useUpdateProduct';
 
-import { ICategory } from '@/shared/types/category.interface'
-import { IColor } from '@/shared/types/color.interface'
-import { IProduct, IProductInput } from '@/shared/types/product.interface'
+import { ICategory } from '@/shared/types/category.interface';
+import { IColor } from '@/shared/types/color.interface';
+import { IProduct, IProductInput } from '@/shared/types/product.interface';
 
-import styles from '../Store.module.scss'
+import styles from '../Store.module.scss';
 
 interface ProductFormProps {
-	product?: IProduct
-	categories: ICategory[]
-	colors: IColor[]
+	product?: IProduct;
+	categories: ICategory[];
+	colors: IColor[];
 }
 
 export function ProductForm({ product, categories, colors }: ProductFormProps) {
-	const { createProduct, isLoadingCreate } = useCreateProduct()
-	const { updateProduct, isLoadingUpdate } = useUpdateProduct()
-	const { deleteProduct, isLoadingDelete } = useDeleteProduct()
+	const { createProduct, isLoadingCreate } = useCreateProduct();
+	const { updateProduct, isLoadingUpdate } = useUpdateProduct();
+	const { deleteProduct, isLoadingDelete } = useDeleteProduct();
 
-	const title = product ? 'Изменить данные' : 'Создать товар'
+	const title = product ? 'Змінити дані' : 'Створити товар';
 	const description = product
-		? 'Изменить данные о товаре'
-		: 'Добавить новый товар в магазин'
-	const action = product ? 'Сохранить' : 'Создать'
+		? 'Змінити дані про товар'
+		: 'Додати новий товар в магазин';
+	const action = product ? 'Зберегти' : 'Створити';
 
 	const form = useForm<IProductInput>({
 		mode: 'onChange',
@@ -60,21 +60,14 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 			price: product?.price || 0,
 			categoryId: product?.category.id || '',
 			colorId: product?.color.id || ''
-		} || {
-			title: '',
-			description: '',
-			images: [],
-			price: 0,
-			categoryId: '',
-			colorId: ''
 		}
-	})
+	});
 
 	const onSubmit: SubmitHandler<IProductInput> = data => {
-		data.price = Number(data.price)
-		if (product) updateProduct(data)
-		else createProduct(data)
-	}
+		data.price = Number(data.price);
+		if (product) updateProduct(data);
+		else createProduct(data);
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -82,12 +75,8 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 				<Heading title={title} description={description} />
 				{product && (
 					<ConfirmModal handleClick={() => deleteProduct()}>
-						<Button
-							size='icon'
-							variant='primary'
-							disabled={isLoadingDelete}
-						>
-							<Trash className='size-4' />
+						<Button size="icon" variant="primary" disabled={isLoadingDelete}>
+							<Trash className="size-4" />
 						</Button>
 					</ConfirmModal>
 				)}
@@ -96,18 +85,16 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 				<form onSubmit={form.handleSubmit(onSubmit)}>
 					<FormField
 						control={form.control}
-						name='images'
+						name="images"
 						rules={{
-							required: 'Загрузите хотя бы одну картинку'
+							required: 'Завантажте хоча б одну картинку'
 						}}
 						render={({ field }) => (
-							<FormItem className='mt-4'>
+							<FormItem className="mt-4">
 								<FormLabel>Картинки</FormLabel>
 								<FormControl>
 									<ImageUpload
-										isDisabled={
-											isLoadingCreate || isLoadingUpdate
-										}
+										isDisabled={isLoadingCreate || isLoadingUpdate}
 										onChange={field.onChange}
 										value={field.value}
 									/>
@@ -119,20 +106,17 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 					<div className={styles.fields}>
 						<FormField
 							control={form.control}
-							name='title'
+							name="title"
 							rules={{
-								required: 'Название обязательно'
+								required: "Назва обов'язкова"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Название</FormLabel>
+									<FormLabel>Назва</FormLabel>
 									<FormControl>
 										<Input
-											placeholder='Название товара'
-											disabled={
-												isLoadingCreate ||
-												isLoadingUpdate
-											}
+											placeholder="Назва товару"
+											disabled={isLoadingCreate || isLoadingUpdate}
 											{...field}
 										/>
 									</FormControl>
@@ -142,20 +126,17 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 						/>
 						<FormField
 							control={form.control}
-							name='price'
+							name="price"
 							rules={{
-								required: 'Цена обязательна'
+								required: "Ціна обов'зякова"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Цена</FormLabel>
+									<FormLabel>Ціна</FormLabel>
 									<FormControl>
 										<Input
-											placeholder='Цена товара'
-											disabled={
-												isLoadingCreate ||
-												isLoadingUpdate
-											}
+											placeholder="Ціна товару"
+											disabled={isLoadingCreate || isLoadingUpdate}
 											{...field}
 										/>
 									</FormControl>
@@ -165,32 +146,27 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 						/>
 						<FormField
 							control={form.control}
-							name='categoryId'
+							name="categoryId"
 							rules={{
-								required: 'Категория обязательна'
+								required: "Категорія обов'зякова"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Цена</FormLabel>
+									<FormLabel>Категорія</FormLabel>
 									<Select
-										disabled={
-											isLoadingCreate || isLoadingUpdate
-										}
+										disabled={isLoadingCreate || isLoadingUpdate}
 										onValueChange={field.onChange}
 										defaultValue={field.value}
 									>
 										<FormControl>
 											<SelectTrigger>
-												<SelectValue placeholder='Категория товара' />
+												<SelectValue placeholder="Категорія товару" />
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
 											<SelectGroup>
 												{categories.map(category => (
-													<SelectItem
-														value={category.id}
-														key={category.id}
-													>
+													<SelectItem value={category.id} key={category.id}>
 														{category.title}
 													</SelectItem>
 												))}
@@ -205,32 +181,27 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 					<div className={styles.fields}>
 						<FormField
 							control={form.control}
-							name='colorId'
+							name="colorId"
 							rules={{
-								required: 'Цвет обязателен'
+								required: "Колір обов'зяковий"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Цвет</FormLabel>
+									<FormLabel>Колір</FormLabel>
 									<Select
-										disabled={
-											isLoadingCreate || isLoadingUpdate
-										}
+										disabled={isLoadingCreate || isLoadingUpdate}
 										onValueChange={field.onChange}
 										defaultValue={field.value}
 									>
 										<FormControl>
 											<SelectTrigger>
-												<SelectValue placeholder='Цвет товара' />
+												<SelectValue placeholder="Колір товару" />
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
 											<SelectGroup>
 												{colors.map(color => (
-													<SelectItem
-														value={color.id}
-														key={color.id}
-													>
+													<SelectItem value={color.id} key={color.id}>
 														{color.name}
 													</SelectItem>
 												))}
@@ -244,19 +215,17 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 					</div>
 					<FormField
 						control={form.control}
-						name='description'
+						name="description"
 						rules={{
-							required: 'Описание обязательно'
+							required: "Опис обов'язковий"
 						}}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Описание</FormLabel>
+								<FormLabel>Опис</FormLabel>
 								<FormControl>
 									<Textarea
-										placeholder='Описание магазина'
-										disabled={
-											isLoadingCreate || isLoadingUpdate
-										}
+										placeholder="Опис магазину"
+										disabled={isLoadingCreate || isLoadingUpdate}
 										{...field}
 									/>
 								</FormControl>
@@ -266,7 +235,7 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 					/>
 
 					<Button
-						variant='primary'
+						variant="primary"
 						disabled={isLoadingCreate || isLoadingUpdate}
 					>
 						{action}
@@ -274,5 +243,5 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 				</form>
 			</Form>
 		</div>
-	)
+	);
 }

@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown } from 'lucide-react'
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button';
 
 export interface IOrderColumn {
-	createdAt: string
-	status: string
-	total: string
+	createdAt: string;
+	status: string;
+	total: string;
 }
 
 export const orderColumns: ColumnDef<IOrderColumn>[] = [
@@ -17,15 +17,13 @@ export const orderColumns: ColumnDef<IOrderColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Дата оплаты
-					<ArrowUpDown className='ml-2 h-4 w-4' />
+					Дата оплати
+					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			)
+			);
 		}
 	},
 	{
@@ -33,15 +31,13 @@ export const orderColumns: ColumnDef<IOrderColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Статус
-					<ArrowUpDown className='ml-2 h-4 w-4' />
+					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			)
+			);
 		}
 	},
 	{
@@ -49,15 +45,13 @@ export const orderColumns: ColumnDef<IOrderColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Сумма
-					<ArrowUpDown className='ml-2 h-4 w-4' />
+					Сума
+					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			)
+			);
 		}
 	}
-]
+];

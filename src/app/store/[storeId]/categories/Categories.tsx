@@ -1,28 +1,28 @@
-'use client'
+'use client';
 
-import { Plus } from 'lucide-react'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
-import { Button } from '@/components/ui/Button'
-import { Heading } from '@/components/ui/Heading'
-import { DataTable } from '@/components/ui/data-table/DataTable'
-import DataTableLoading from '@/components/ui/data-table/DataTableLoading'
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
+import { DataTable } from '@/components/ui/data-table/DataTable';
+import DataTableLoading from '@/components/ui/data-table/DataTableLoading';
 
-import { STORE_URL } from '@/config/url.config'
+import { STORE_URL } from '@/config/url.config';
 
-import { useGetCategories } from '@/hooks/queries/categories/useGetCategories'
+import { useGetCategories } from '@/hooks/queries/categories/useGetCategories';
 
-import { formatDate } from '@/utils/date/format-date'
+import { formatDate } from '@/utils/date/format-date';
 
-import styles from '../Store.module.scss'
+import styles from '../Store.module.scss';
 
-import { ICategoryColumn, categoryColumns } from './CategoryColumns'
+import { ICategoryColumn, categoryColumns } from './CategoryColumns';
 
 export function Categories() {
-	const params = useParams<{ storeId: string }>()
+	const params = useParams<{ storeId: string }>();
 
-	const { categories, isLoading } = useGetCategories()
+	const { categories, isLoading } = useGetCategories();
 
 	const formattedCategories: ICategoryColumn[] = categories
 		? categories.map(category => ({
@@ -31,7 +31,7 @@ export function Categories() {
 				title: category.title,
 				storeId: category.storeId
 			}))
-		: []
+		: [];
 
 	return (
 		<div className={styles.wrapper}>
@@ -41,16 +41,14 @@ export function Categories() {
 				<>
 					<div className={styles.header}>
 						<Heading
-							title={`Категории (${categories?.length})`}
-							description='Все категории вашего магазина'
+							title={`Категорії (${categories?.length})`}
+							description="Усі категорії вашого магазину"
 						/>
 						<div className={styles.buttons}>
-							<Link
-								href={STORE_URL.categoryCreate(params.storeId)}
-							>
-								<Button variant='primary'>
+							<Link href={STORE_URL.categoryCreate(params.storeId)}>
+								<Button variant="primary">
 									<Plus />
-									Создать
+									Створити
 								</Button>
 							</Link>
 						</div>
@@ -59,11 +57,11 @@ export function Categories() {
 						<DataTable
 							columns={categoryColumns}
 							data={formattedCategories}
-							filterKey='title'
+							filterKey="title"
 						/>
 					</div>
 				</>
 			)}
 		</div>
-	)
+	);
 }

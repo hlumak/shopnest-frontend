@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
-import { NO_INDEX_PAGE } from '@/constants/seo.constants'
+import { NO_INDEX_PAGE } from '@/constants/seo.constants';
 
-import { ProductEdit } from './ProductEdit'
+import { ProductEdit } from './ProductEdit';
 
 export const metadata: Metadata = {
-	title: 'Настройки товара',
+	title: 'Налаштування товару',
 	...NO_INDEX_PAGE
-}
+};
 
 export default function ProductEditPage() {
-	return <ProductEdit />
+	return <ProductEdit />;
 }

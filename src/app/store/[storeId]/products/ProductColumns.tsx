@@ -1,25 +1,30 @@
-import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, ExternalLink, MoreHorizontal, Pencil } from 'lucide-react'
-import Link from 'next/link'
+import { ColumnDef } from '@tanstack/react-table';
+import {
+	ArrowUpDown,
+	ExternalLink,
+	MoreHorizontal,
+	Pencil
+} from 'lucide-react';
+import Link from 'next/link';
 
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/Button';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuTrigger
-} from '@/components/ui/DropdownMenu'
+} from '@/components/ui/DropdownMenu';
 
-import { PUBLIC_URL, STORE_URL } from '@/config/url.config'
+import { PUBLIC_URL, STORE_URL } from '@/config/url.config';
 
 export interface IProductColumn {
-	id: string
-	title: string
-	price: string
-	category: string
-	color: string
-	storeId: string
+	id: string;
+	title: string;
+	price: string;
+	category: string;
+	color: string;
+	storeId: string;
 }
 
 export const productColumns: ColumnDef<IProductColumn>[] = [
@@ -28,15 +33,13 @@ export const productColumns: ColumnDef<IProductColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Название
-					<ArrowUpDown className='ml-2 size-4' />
+					Назва
+					<ArrowUpDown className="ml-2 size-4" />
 				</Button>
-			)
+			);
 		}
 	},
 	{
@@ -44,15 +47,13 @@ export const productColumns: ColumnDef<IProductColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Цена
-					<ArrowUpDown className='ml-2 size-4' />
+					Ціна
+					<ArrowUpDown className="ml-2 size-4" />
 				</Button>
-			)
+			);
 		}
 	},
 	{
@@ -60,15 +61,13 @@ export const productColumns: ColumnDef<IProductColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Категория
-					<ArrowUpDown className='ml-2 size-4' />
+					Категорія
+					<ArrowUpDown className="ml-2 size-4" />
 				</Button>
-			)
+			);
 		}
 	},
 	{
@@ -76,21 +75,19 @@ export const productColumns: ColumnDef<IProductColumn>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
-					variant='ghost'
-					onClick={() =>
-						column.toggleSorting(column.getIsSorted() === 'asc')
-					}
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
-					Цвет
-					<ArrowUpDown className='ml-2 size-4' />
+					Колір
+					<ArrowUpDown className="ml-2 size-4" />
 				</Button>
-			)
+			);
 		},
 		cell: ({ row }) => (
-			<div className='flex items-center gap-x-3'>
+			<div className="flex items-center gap-x-3">
 				{row.original.color}
 				<div
-					className='size-5 rounded-full border'
+					className="size-5 rounded-full border"
 					style={{
 						backgroundColor: row.original.color
 					}}
@@ -100,38 +97,32 @@ export const productColumns: ColumnDef<IProductColumn>[] = [
 	},
 	{
 		accessorKey: 'actions',
-		header: 'Действия',
+		header: 'Дії',
 		cell: ({ row }) => (
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button variant='ghost' className='size-8 p-0'>
-						<MoreHorizontal className='size-4' />
+					<Button variant="ghost" className="size-8 p-0">
+						<MoreHorizontal className="size-4" />
 					</Button>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent align='end'>
-					<DropdownMenuLabel>Действия</DropdownMenuLabel>
-					<Link
-						href={PUBLIC_URL.product(row.original.id)}
-						target='_blank'
-					>
+				<DropdownMenuContent align="end">
+					<DropdownMenuLabel>Дії</DropdownMenuLabel>
+					<Link href={PUBLIC_URL.product(row.original.id)} target="_blank">
 						<DropdownMenuItem>
-							<ExternalLink className='size-4 mr-2' />
-							Страница с продуктом
+							<ExternalLink className="size-4 mr-2" />
+							Сторінка з товаром
 						</DropdownMenuItem>
 					</Link>
 					<Link
-						href={STORE_URL.productEdit(
-							row.original.storeId,
-							row.original.id
-						)}
+						href={STORE_URL.productEdit(row.original.storeId, row.original.id)}
 					>
 						<DropdownMenuItem>
-							<Pencil className='size-4 mr-2' />
-							Изменить
+							<Pencil className="size-4 mr-2" />
+							Змінити
 						</DropdownMenuItem>
 					</Link>
 				</DropdownMenuContent>
 			</DropdownMenu>
 		)
 	}
-]
+];

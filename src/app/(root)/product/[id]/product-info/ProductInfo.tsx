@@ -1,18 +1,18 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { PUBLIC_URL } from '@/config/url.config'
+import { PUBLIC_URL } from '@/config/url.config';
 
-import { IProduct } from '@/shared/types/product.interface'
+import { IProduct } from '@/shared/types/product.interface';
 
-import { formatPrice } from '@/utils/string/format-price'
-import { getReviewWordWithEnding } from '@/utils/string/get-review-word-with-ending'
+import { formatPrice } from '@/utils/string/format-price';
+import { getReviewWordWithEnding } from '@/utils/string/get-review-word-with-ending';
 
-import { AddToCartButton } from './AddToCartButton'
-import { FavoriteButton } from './FavoriteButton'
-import styles from './ProductInfo.module.scss'
+import { AddToCartButton } from './AddToCartButton';
+import { FavoriteButton } from './FavoriteButton';
+import styles from './ProductInfo.module.scss';
 
 interface ProductInfoProps {
-	product: IProduct
+	product: IProduct;
 }
 
 export function ProductInfo({ product }: ProductInfoProps) {
@@ -20,7 +20,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 		Math.round(
 			product.reviews.reduce((acc, review) => acc + review.rating, 0) /
 				product.reviews.length
-		) || 0
+		) || 0;
 
 	return (
 		<div className={styles.product_info}>
@@ -30,7 +30,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 			<p className={styles.description}>{product.description}</p>
 			<hr />
 			<div className={styles.label}>
-				<h3>Цвет: </h3>
+				<h3>Колір: </h3>
 				<div
 					className={styles.color}
 					style={{
@@ -39,17 +39,17 @@ export function ProductInfo({ product }: ProductInfoProps) {
 				/>
 			</div>
 			<div className={styles.label}>
-				<h3>Категория: </h3>
+				<h3>Категорія: </h3>
 				<Link
-					className='text-sm'
+					className="text-sm"
 					href={PUBLIC_URL.category(product.category.id)}
 				>
 					{product.category.title}
 				</Link>
 			</div>
 			<div className={styles.label}>
-				<h3>Средний рейтинг: </h3>
-				<div className='text-sm'>
+				<h3>Середній рейтинг: </h3>
+				<div className="text-sm">
 					⭐ {rating.toFixed(1)} |{' '}
 					{getReviewWordWithEnding(product.reviews.length)}
 				</div>
@@ -60,5 +60,5 @@ export function ProductInfo({ product }: ProductInfoProps) {
 				<FavoriteButton product={product} />
 			</div>
 		</div>
-	)
+	);
 }

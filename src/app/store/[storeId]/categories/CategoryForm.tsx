@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { Trash } from 'lucide-react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Trash } from 'lucide-react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui/Button'
-import { Heading } from '@/components/ui/Heading'
-import { Textarea } from '@/components/ui/Textarea'
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
+import { Textarea } from '@/components/ui/Textarea';
 import {
 	Form,
 	FormControl,
@@ -13,48 +13,45 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage
-} from '@/components/ui/form-elements/Form'
-import { Input } from '@/components/ui/form-elements/Input'
-import { ConfirmModal } from '@/components/ui/modals/ConfirmModal'
+} from '@/components/ui/form-elements/Form';
+import { Input } from '@/components/ui/form-elements/Input';
+import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
 
-import { useCreateCategory } from '@/hooks/queries/categories/useCreateCategory'
-import { useDeleteCategory } from '@/hooks/queries/categories/useDeleteCategory'
-import { useUpdateCategory } from '@/hooks/queries/categories/useUpdateCategory'
+import { useCreateCategory } from '@/hooks/queries/categories/useCreateCategory';
+import { useDeleteCategory } from '@/hooks/queries/categories/useDeleteCategory';
+import { useUpdateCategory } from '@/hooks/queries/categories/useUpdateCategory';
 
-import { ICategory, ICategoryInput } from '@/shared/types/category.interface'
+import { ICategory, ICategoryInput } from '@/shared/types/category.interface';
 
-import styles from '../Store.module.scss'
+import styles from '../Store.module.scss';
 
 interface ICategoryForm {
-	category?: ICategory | null
+	category?: ICategory | null;
 }
 
 export function CategoryForm({ category }: ICategoryForm) {
-	const { createCategory, isLoadingCreate } = useCreateCategory()
-	const { updateCategory, isLoadingUpdate } = useUpdateCategory()
-	const { deleteCategory, isLoadingDelete } = useDeleteCategory()
+	const { createCategory, isLoadingCreate } = useCreateCategory();
+	const { updateCategory, isLoadingUpdate } = useUpdateCategory();
+	const { deleteCategory, isLoadingDelete } = useDeleteCategory();
 
-	const title = category ? 'Изменить данные' : 'Создать категорию'
+	const title = category ? 'Змінити дані' : 'Створити категорію';
 	const description = category
-		? 'Изменить данные о категории'
-		: 'Добавить новую категорию в магазин'
-	const action = category ? 'Сохранить' : 'Создать'
+		? 'Змінити дані про категорію'
+		: 'Додати нову категорію в магазин';
+	const action = category ? 'Зберегти' : 'Створити';
 
 	const form = useForm<ICategoryInput>({
 		mode: 'onChange',
 		values: {
 			title: category?.title || '',
 			description: category?.description || ''
-		} || {
-			title: '',
-			description: ''
 		}
-	})
+	});
 
 	const onSubmit: SubmitHandler<ICategoryInput> = data => {
-		if (category) updateCategory(data)
-		else createCategory(data)
-	}
+		if (category) updateCategory(data);
+		else createCategory(data);
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -62,12 +59,8 @@ export function CategoryForm({ category }: ICategoryForm) {
 				<Heading title={title} description={description} />
 				{category && (
 					<ConfirmModal handleClick={() => deleteCategory()}>
-						<Button
-							size='icon'
-							variant='primary'
-							disabled={isLoadingDelete}
-						>
-							<Trash className='size-4' />
+						<Button size="icon" variant="primary" disabled={isLoadingDelete}>
+							<Trash className="size-4" />
 						</Button>
 					</ConfirmModal>
 				)}
@@ -77,21 +70,18 @@ export function CategoryForm({ category }: ICategoryForm) {
 					<div className={styles.fields}>
 						<FormField
 							control={form.control}
-							name='title'
+							name="title"
 							rules={{
-								required: 'Название обязательно'
+								required: "Назва обов'язкова"
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Название</FormLabel>
+									<FormLabel>Назва</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
-											placeholder='Название категории'
-											disabled={
-												isLoadingCreate ||
-												isLoadingUpdate
-											}
+											placeholder="Назва категорії"
+											disabled={isLoadingCreate || isLoadingUpdate}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -101,20 +91,18 @@ export function CategoryForm({ category }: ICategoryForm) {
 					</div>
 					<FormField
 						control={form.control}
-						name='description'
+						name="description"
 						rules={{
-							required: 'Описание обязательно'
+							required: "Опис обов'язковий"
 						}}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Описание</FormLabel>
+								<FormLabel>Опис</FormLabel>
 								<FormControl>
 									<Textarea
 										{...field}
-										placeholder='Описание категории'
-										disabled={
-											isLoadingCreate || isLoadingUpdate
-										}
+										placeholder="Опис категорії"
+										disabled={isLoadingCreate || isLoadingUpdate}
 									/>
 								</FormControl>
 								<FormMessage />
@@ -123,7 +111,7 @@ export function CategoryForm({ category }: ICategoryForm) {
 					/>
 
 					<Button
-						variant='primary'
+						variant="primary"
 						disabled={isLoadingCreate || isLoadingUpdate}
 					>
 						{action}
@@ -131,5 +119,5 @@ export function CategoryForm({ category }: ICategoryForm) {
 				</form>
 			</Form>
 		</div>
-	)
+	);
 }
