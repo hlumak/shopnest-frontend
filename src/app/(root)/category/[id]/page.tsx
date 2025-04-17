@@ -15,14 +15,15 @@ async function getProducts(params: { id: string }) {
 	return { products, category }
 }
 
-export async function generateMetadata({
-	params
-}: {
-	params: { id: string }
-}): Promise<Metadata> {
-	const { category, products } = await getProducts(params)
+export async function generateMetadata(
+    props: {
+        params: Promise<{ id: string }>
+    }
+): Promise<Metadata> {
+    const params = await props.params;
+    const { category, products } = await getProducts(params)
 
-	return {
+    return {
 		title: category.title,
 		description: category.description,
 		openGraph: {
@@ -38,14 +39,15 @@ export async function generateMetadata({
 	}
 }
 
-export default async function CategoryPage({
-	params
-}: {
-	params: { id: string }
-}) {
-	const { category, products } = await getProducts(params)
+export default async function CategoryPage(
+    props: {
+        params: Promise<{ id: string }>
+    }
+) {
+    const params = await props.params;
+    const { category, products } = await getProducts(params)
 
-	return (
+    return (
 		<div className='my-6'>
 			<Catalog
 				title={category.title}

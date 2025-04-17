@@ -29,14 +29,15 @@ async function getProducts(params: { id: string }) {
 	}
 }
 
-export async function generateMetadata({
-	params
-}: {
-	params: { id: string };
-}): Promise<Metadata> {
-	const { product } = await getProducts(params);
+export async function generateMetadata(
+    props: {
+        params: Promise<{ id: string }>;
+    }
+): Promise<Metadata> {
+    const params = await props.params;
+    const { product } = await getProducts(params);
 
-	return {
+    return {
 		title: product.title,
 		description: product.description,
 		openGraph: {
@@ -52,14 +53,15 @@ export async function generateMetadata({
 	};
 }
 
-export default async function ProductPage({
-	params
-}: {
-	params: { id: string };
-}) {
-	const { product, similarProducts } = await getProducts(params);
+export default async function ProductPage(
+    props: {
+        params: Promise<{ id: string }>;
+    }
+) {
+    const params = await props.params;
+    const { product, similarProducts } = await getProducts(params);
 
-	return (
+    return (
 		<Product
 			initialProduct={product}
 			similarProducts={similarProducts}
