@@ -12,12 +12,7 @@ export const metadata: Metadata = {
 		absolute: SITE_NAME,
 		template: `%s | ${SITE_NAME}`
 	},
-	description: SITE_DESCRIPTION,
-	icons: {
-		icon: '../../public/icons/favicon.ico',
-		shortcut: '../../public/icons/favicon-16x16.png',
-		apple: '../../public/icons/apple-touch-icon.png'
-	}
+	description: SITE_DESCRIPTION
 };
 
 export default function RootLayout({

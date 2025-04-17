@@ -1,6 +1,8 @@
 'use client';
 
+import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/Button';
@@ -13,6 +15,8 @@ import {
 	CardTitle
 } from '@/components/ui/Card';
 import { Form } from '@/components/ui/form-elements/Form';
+
+import { PUBLIC_URL } from '@/config/url.config';
 
 import styles from './Auth.module.scss';
 import { AuthFields } from './AuthFields';
@@ -61,6 +65,14 @@ export function Auth() {
 						</button>
 					</CardFooter>
 				</Card>
+				<div className={styles.returnHome}>
+					<Link href={PUBLIC_URL.home()}>
+						<Button variant="ghost" type="button">
+							<ArrowLeft size={16} className="mr-2" />
+							Повернутися на головну
+						</Button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);
