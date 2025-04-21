@@ -34,7 +34,12 @@ export function AuthFields({
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="Влад" disabled={isPending} {...field} />
+								<Input
+									placeholder="Влад"
+									disabled={isPending}
+									{...field}
+									value={field.value ?? ''}
+								/>
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -59,6 +64,7 @@ export function AuthFields({
 								type="email"
 								disabled={isPending}
 								{...field}
+								value={field.value ?? ''}
 							/>
 						</FormControl>
 						<FormMessage />
@@ -83,6 +89,7 @@ export function AuthFields({
 								type="password"
 								disabled={isPending}
 								{...field}
+								value={field.value ?? ''}
 							/>
 						</FormControl>
 						<FormMessage />

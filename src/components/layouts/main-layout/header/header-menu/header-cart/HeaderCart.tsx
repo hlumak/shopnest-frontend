@@ -1,8 +1,13 @@
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/Button';
-import { Heading } from '@/components/ui/Heading';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger
+} from '@/components/ui/Sheet';
 
 import { PUBLIC_URL } from '@/config/url.config';
 
@@ -33,7 +38,10 @@ export function HeaderCart() {
 				<Button variant="ghost">Кошик</Button>
 			</SheetTrigger>
 			<SheetContent className={styles.cart}>
-				<Heading title="Кошик товарів" className="text-xl" />
+				<SheetHeader>
+					<SheetTitle>Кошик товарів</SheetTitle>
+				</SheetHeader>
+
 				<div className={styles.items}>
 					{items.length ? (
 						items.map(item => <CartItem item={item} key={item.id} />)

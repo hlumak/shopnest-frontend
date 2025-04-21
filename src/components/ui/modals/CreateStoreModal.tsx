@@ -64,6 +64,7 @@ export function CreateStoreModal({ children }: PropsWithChildren<unknown>) {
 											placeholder="Назва магазину"
 											disabled={isLoadingCreate}
 											{...field}
+											value={field.value ?? ''}
 										/>
 									</FormControl>
 									<FormMessage />

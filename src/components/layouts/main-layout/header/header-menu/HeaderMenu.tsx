@@ -49,7 +49,9 @@ export function HeaderMenu() {
 								</Link>
 							) : (
 								<CreateStoreModal>
-									<Button variant="ghost">Створити магазин</Button>
+									<Button variant="ghost" asChild>
+										<span>Створити магазин</span>
+									</Button>
 								</CreateStoreModal>
 							)}
 							<Link href={DASHBOARD_URL.home()}>
