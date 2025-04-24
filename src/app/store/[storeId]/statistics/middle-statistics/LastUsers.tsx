@@ -1,22 +1,22 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 
-import { ILastUsers } from '@/shared/types/statistics.interface'
+import { ILastUsers } from '@/shared/types/statistics.interface';
 
-import { formatPrice } from '@/utils/string/format-price'
+import { formatPrice } from '@/utils/string/format-price';
 
-import styles from './MiddleStatistics.module.scss'
+import styles from './MiddleStatistics.module.scss';
 
 interface LastUsersProps {
-	data: ILastUsers[]
+	data: ILastUsers[];
 }
 
 export function LastUsers({ data }: LastUsersProps) {
 	return (
 		<Card>
 			<CardHeader className={styles.header}>
-				<CardTitle>Прибыль</CardTitle>
+				<CardTitle>Прибуток</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{data.length ? (
@@ -32,15 +32,13 @@ export function LastUsers({ data }: LastUsersProps) {
 								<p className={styles.name}>{user.name}</p>
 								<p>{user.email}</p>
 							</div>
-							<div className={styles.total}>
-								+{formatPrice(user.total)}
-							</div>
+							<div className={styles.total}>+{formatPrice(user.total)}</div>
 						</div>
 					))
 				) : (
-					<div>{`У этого магазина нету покупателей :(`}</div>
+					<div>{`У цього магазину немає покупців :(`}</div>
 				)}
 			</CardContent>
 		</Card>
-	)
+	);
 }

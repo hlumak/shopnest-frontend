@@ -1,20 +1,18 @@
-import { useGetStatistics } from '@/hooks/queries/statistics/useGetStatistics'
+import { useGetStatistics } from '@/hooks/queries/statistics/useGetStatistics';
 
-import styles from './MainStatistics.module.scss'
-import { MainStatisticsItem } from './MainStatisticsItem'
+import styles from './MainStatistics.module.scss';
+import { MainStatisticsItem } from './MainStatisticsItem';
 
 export function MainStatistics() {
-	const { main } = useGetStatistics()
+	const { main } = useGetStatistics();
 
 	return (
 		<div className={styles.main}>
 			{main?.length ? (
-				main.map(item => (
-					<MainStatisticsItem key={item.id} item={item} />
-				))
+				main.map(item => <MainStatisticsItem key={item.id} item={item} />)
 			) : (
-				<div>Нету данных для статистики</div>
+				<div>Немає даних для статистик</div>
 			)}
 		</div>
-	)
+	);
 }

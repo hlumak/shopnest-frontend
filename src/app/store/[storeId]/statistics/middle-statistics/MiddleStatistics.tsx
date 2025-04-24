@@ -1,11 +1,11 @@
-import { useGetStatistics } from '@/hooks/queries/statistics/useGetStatistics'
+import { useGetStatistics } from '@/hooks/queries/statistics/useGetStatistics';
 
-import { LastUsers } from './LastUsers'
-import styles from './MiddleStatistics.module.scss'
-import { Overview } from './Overview'
+import { LastUsers } from './LastUsers';
+import styles from './MiddleStatistics.module.scss';
+import { Overview } from './Overview';
 
 export function MiddleStatistics() {
-	const { middle } = useGetStatistics()
+	const { middle } = useGetStatistics();
 
 	return (
 		<div className={styles.middle}>
@@ -19,8 +19,8 @@ export function MiddleStatistics() {
 					</div>
 				</>
 			) : (
-				<div>Нету данных для статистики</div>
+				<div>Немає даних для статистики</div>
 			)}
 		</div>
-	)
+	);
 }
