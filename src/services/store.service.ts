@@ -1,21 +1,21 @@
-import { axiosWithAuth } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors';
 
-import { API_URL } from '@/config/api.config'
+import { API_URL } from '@/config/api.config';
 
 import {
 	IStore,
 	IStoreCreate,
 	IStoreEdit
-} from '@/shared/types/store.interface'
+} from '@/shared/types/store.interface';
 
 class StoreService {
 	async getById(id: string) {
 		const { data } = await axiosWithAuth<IStore>({
-			url: API_URL.stores(`/by-id/${id}`),
+			url: API_URL.stores(`/${id}`),
 			method: 'GET'
-		})
+		});
 
-		return data
+		return data;
 	}
 
 	async create(data: IStoreCreate) {
@@ -23,9 +23,9 @@ class StoreService {
 			url: API_URL.stores(''),
 			method: 'POST',
 			data
-		})
+		});
 
-		return createdStore
+		return createdStore;
 	}
 
 	async update(id: string, data: IStoreEdit) {
@@ -33,19 +33,19 @@ class StoreService {
 			url: API_URL.stores(`/${id}`),
 			method: 'PUT',
 			data
-		})
+		});
 
-		return updatedStore
+		return updatedStore;
 	}
 
 	async delete(id: string) {
 		const { data: deletedStore } = await axiosWithAuth<IStore>({
 			url: API_URL.stores(`/${id}`),
 			method: 'DELETE'
-		})
+		});
 
-		return deletedStore
+		return deletedStore;
 	}
 }
 
-export const storeService = new StoreService()
+export const storeService = new StoreService();

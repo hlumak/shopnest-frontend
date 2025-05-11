@@ -1,39 +1,39 @@
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import {
 	type ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent
-} from '@/components/ui/Chart'
+} from '@/components/ui/Chart';
 
-import { IMonthlySales } from '@/shared/types/statistics.interface'
+import { IMonthlySales } from '@/shared/types/statistics.interface';
 
-import { formatPrice } from '@/utils/string/format-price'
+import { formatPrice } from '@/utils/string/format-price';
 
-import styles from './MiddleStatistics.module.scss'
+import styles from './MiddleStatistics.module.scss';
 
 const chartConfig = {
 	value: {
-		label: 'Прибыль',
+		label: 'Прибуток',
 		color: '#3B82F6'
 	}
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 interface OverviewProps {
-	data: IMonthlySales[]
+	data: IMonthlySales[];
 }
 
 export function Overview({ data }: OverviewProps) {
 	return (
 		<Card>
 			<CardHeader className={styles.header}>
-				<CardTitle>Прибыль</CardTitle>
+				<CardTitle>Прибуток</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<ChartContainer
-					className='aspect-auto h-[310px] w-full'
+					className="aspect-auto h-[310px] w-full"
 					config={chartConfig}
 				>
 					<AreaChart
@@ -46,7 +46,7 @@ export function Overview({ data }: OverviewProps) {
 					>
 						<CartesianGrid vertical={false} />
 						<XAxis
-							dataKey='date'
+							dataKey="date"
 							tickLine={false}
 							axisLine={false}
 							tickMargin={8}
@@ -55,19 +55,19 @@ export function Overview({ data }: OverviewProps) {
 							content={
 								<ChartTooltipContent
 									labelFormatter={formatPrice}
-									indicator='line'
+									indicator="line"
 								/>
 							}
 						/>
 						<Area
-							dataKey='value'
-							type='natural'
-							fill='var(--color-value)'
-							stroke='var(--color-value)'
+							dataKey="value"
+							type="natural"
+							fill="var(--color-value)"
+							stroke="var(--color-value)"
 						/>
 					</AreaChart>
 				</ChartContainer>
 			</CardContent>
 		</Card>
-	)
+	);
 }

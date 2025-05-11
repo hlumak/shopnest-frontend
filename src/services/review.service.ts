@@ -7,7 +7,7 @@ import { IReview, IReviewInput } from '@/shared/types/review.interface'
 class ReviewService {
 	async getByStoreId(id: string) {
 		const { data } = await axiosWithAuth<IReview[]>({
-			url: API_URL.reviews(`/by-storeId/${id}`),
+			url: API_URL.reviews(`/stores/${id}`),
 			method: 'GET'
 		})
 

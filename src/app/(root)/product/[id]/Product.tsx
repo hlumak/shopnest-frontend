@@ -9,7 +9,7 @@ import { productService } from '@/services/product.service';
 import { IProduct } from '@/shared/types/product.interface';
 
 import styles from './Product.module.scss';
-import { ProdcutGallery } from './prodcut-gallery/ProdcutGallery';
+import { ProductGallery } from './prodcut-gallery/ProductGallery';
 import { ProductInfo } from './product-info/ProductInfo';
 import { ProductReviews } from './product-reviews/ProductReviews';
 
@@ -35,7 +35,7 @@ export function Product({
 		<div className={styles.product_page}>
 			<div className={styles.content}>
 				<div className={styles.blocks}>
-					<ProdcutGallery product={product} />
+					<ProductGallery product={product} />
 					<ProductInfo product={product} />
 				</div>
 			</div>

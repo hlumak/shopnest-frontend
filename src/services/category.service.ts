@@ -1,26 +1,26 @@
-import { axiosClassic, axiosWithAuth } from '@/api/api.interceptors'
+import { axiosClassic, axiosWithAuth } from '@/api/api.interceptors';
 
-import { API_URL } from '@/config/api.config'
+import { API_URL } from '@/config/api.config';
 
-import { ICategory, ICategoryInput } from '@/shared/types/category.interface'
+import { ICategory, ICategoryInput } from '@/shared/types/category.interface';
 
 class CategoryService {
 	async getByStoreId(id: string) {
 		const { data } = await axiosWithAuth<ICategory[]>({
-			url: API_URL.categories(`/by-storeId/${id}`),
+			url: API_URL.categories(`/stores/${id}`),
 			method: 'GET'
-		})
+		});
 
-		return data
+		return data;
 	}
 
 	async getById(id: string) {
 		const { data } = await axiosClassic<ICategory>({
-			url: API_URL.categories(`/by-id/${id}`),
+			url: API_URL.categories(`/${id}`),
 			method: 'GET'
-		})
+		});
 
-		return data
+		return data;
 	}
 
 	async create(data: ICategoryInput, storeId: string) {
@@ -28,9 +28,9 @@ class CategoryService {
 			url: API_URL.categories(`/${storeId}`),
 			method: 'POST',
 			data
-		})
+		});
 
-		return createdCategory
+		return createdCategory;
 	}
 
 	async update(id: string, data: ICategoryInput) {
@@ -38,19 +38,19 @@ class CategoryService {
 			url: API_URL.categories(`/${id}`),
 			method: 'PUT',
 			data
-		})
+		});
 
-		return updatedCategory
+		return updatedCategory;
 	}
 
 	async delete(id: string) {
 		const { data: deletedCategory } = await axiosWithAuth<ICategory>({
 			url: API_URL.categories(`/${id}`),
 			method: 'DELETE'
-		})
+		});
 
-		return deletedCategory
+		return deletedCategory;
 	}
 }
 
-export const categoryService = new CategoryService()
+export const categoryService = new CategoryService();

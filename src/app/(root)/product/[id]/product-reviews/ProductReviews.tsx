@@ -28,9 +28,11 @@ export function ProductReviews({ product }: ProductReviewsProps) {
 				<h1>Відгуки</h1>
 				{user && (
 					<ReviewModal storeId={product.storeId}>
-						<Button variant="ghost">
-							<Plus />
-							Додати відгук
+						<Button variant="ghost" asChild>
+							<span className="flex items-center gap-1">
+								<Plus />
+								Додати відгук
+							</span>
 						</Button>
 					</ReviewModal>
 				)}
@@ -38,7 +40,7 @@ export function ProductReviews({ product }: ProductReviewsProps) {
 			<div className={styles.reviews}>
 				{product.reviews.length ? (
 					product.reviews.map(review => (
-						<div className={styles.review}>
+						<div key={review.id} className={styles.review}>
 							<div className={styles.header}>
 								<div className={styles.user}>
 									<Image

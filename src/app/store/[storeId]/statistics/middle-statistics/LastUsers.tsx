@@ -21,7 +21,7 @@ export function LastUsers({ data }: LastUsersProps) {
 			<CardContent>
 				{data.length ? (
 					data.map(user => (
-						<div className={styles.user}>
+						<div key={user.id} className={styles.user}>
 							<Image
 								src={user.picture}
 								alt={user.name}

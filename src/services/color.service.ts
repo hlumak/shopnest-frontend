@@ -1,26 +1,26 @@
-import { axiosWithAuth } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors';
 
-import { API_URL } from '@/config/api.config'
+import { API_URL } from '@/config/api.config';
 
-import { IColor, IColorInput } from '@/shared/types/color.interface'
+import { IColor, IColorInput } from '@/shared/types/color.interface';
 
 class ColorService {
 	async getByStoreId(id: string) {
 		const { data } = await axiosWithAuth<IColor[]>({
-			url: API_URL.colors(`/by-storeId/${id}`),
+			url: API_URL.colors(`/stores/${id}`),
 			method: 'GET'
-		})
+		});
 
-		return data || []
+		return data || [];
 	}
 
 	async getById(id: string) {
 		const { data } = await axiosWithAuth<IColor>({
-			url: API_URL.colors(`/by-id/${id}`),
+			url: API_URL.colors(`/${id}`),
 			method: 'GET'
-		})
+		});
 
-		return data
+		return data;
 	}
 
 	async create(data: IColorInput, storeId: string) {
@@ -28,9 +28,9 @@ class ColorService {
 			url: API_URL.colors(`/${storeId}`),
 			method: 'POST',
 			data
-		})
+		});
 
-		return createdColor
+		return createdColor;
 	}
 
 	async update(id: string, data: IColorInput) {
@@ -38,19 +38,19 @@ class ColorService {
 			url: API_URL.colors(`/${id}`),
 			method: 'PUT',
 			data
-		})
+		});
 
-		return updatedColor
+		return updatedColor;
 	}
 
 	async delete(id: string) {
 		const { data: deletedColor } = await axiosWithAuth<IColor>({
 			url: API_URL.colors(`/${id}`),
 			method: 'DELETE'
-		})
+		});
 
-		return deletedColor
+		return deletedColor;
 	}
 }
 
-export const colorService = new ColorService()
+export const colorService = new ColorService();
