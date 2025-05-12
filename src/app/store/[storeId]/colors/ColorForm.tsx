@@ -1,8 +1,8 @@
-import { Trash } from 'lucide-react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Trash } from 'lucide-react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Button } from '@/components/ui/Button'
-import { Heading } from '@/components/ui/Heading'
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Heading';
 import {
 	Form,
 	FormControl,
@@ -10,48 +10,45 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage
-} from '@/components/ui/form-elements/Form'
-import { Input } from '@/components/ui/form-elements/Input'
-import { ConfirmModal } from '@/components/ui/modals/ConfirmModal'
+} from '@/components/ui/form-elements/Form';
+import { Input } from '@/components/ui/form-elements/Input';
+import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
 
-import { useCreateColor } from '@/hooks/queries/colors/useCreateColor'
-import { useDeleteColor } from '@/hooks/queries/colors/useDeleteColor'
-import { useUpdateColor } from '@/hooks/queries/colors/useUpdateColor'
+import { useCreateColor } from '@/hooks/queries/colors/useCreateColor';
+import { useDeleteColor } from '@/hooks/queries/colors/useDeleteColor';
+import { useUpdateColor } from '@/hooks/queries/colors/useUpdateColor';
 
-import { IColor, IColorInput } from '@/shared/types/color.interface'
+import { IColor, IColorInput } from '@/shared/types/color.interface';
 
-import styles from '../Store.module.scss'
+import styles from '../Store.module.scss';
 
 interface ColorFormProps {
-	color?: IColor
+	color?: IColor;
 }
 
 export function ColorForm({ color }: ColorFormProps) {
-	const { createColor, isLoadingCreate } = useCreateColor()
-	const { updateColor, isLoadingUpdate } = useUpdateColor()
-	const { deleteColor, isLoadingDelete } = useDeleteColor()
+	const { createColor, isLoadingCreate } = useCreateColor();
+	const { updateColor, isLoadingUpdate } = useUpdateColor();
+	const { deleteColor, isLoadingDelete } = useDeleteColor();
 
-	const title = color ? 'Змінити дані' : 'Створити колір'
+	const title = color ? 'Змінити дані' : 'Створити колір';
 	const description = color
 		? 'Змінити дані про колір'
-		: 'Додати новий колір до магазину'
-	const action = color ? 'Зберегти' : 'Створити'
+		: 'Додати новий колір до магазину';
+	const action = color ? 'Зберегти' : 'Створити';
 
 	const form = useForm<IColorInput>({
 		mode: 'onChange',
 		values: {
 			name: color?.name || '',
 			value: color?.value || ''
-		} || {
-			name: '',
-			value: ''
 		}
-	})
+	});
 
 	const onSubmit: SubmitHandler<IColorInput> = data => {
-		if (color) updateColor(data)
-		else createColor(data)
-	}
+		if (color) updateColor(data);
+		else createColor(data);
+	};
 
 	return (
 		<div className={styles.wrapper}>
@@ -59,12 +56,8 @@ export function ColorForm({ color }: ColorFormProps) {
 				<Heading title={title} description={description} />
 				{color && (
 					<ConfirmModal handleClick={() => deleteColor()}>
-						<Button
-							size='icon'
-							variant='primary'
-							disabled={isLoadingDelete}
-						>
-							<Trash className='size-4' />
+						<Button size="icon" variant="primary" disabled={isLoadingDelete}>
+							<Trash className="size-4" />
 						</Button>
 					</ConfirmModal>
 				)}
@@ -74,20 +67,17 @@ export function ColorForm({ color }: ColorFormProps) {
 					<div className={styles.fields}>
 						<FormField
 							control={form.control}
-							name='name'
+							name="name"
 							rules={{
-								required: 'Назва обов\'язкова'
+								required: "Назва обов'язкова"
 							}}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Название</FormLabel>
 									<FormControl>
 										<Input
-											placeholder='Назва кольору'
-											disabled={
-												isLoadingCreate ||
-												isLoadingUpdate
-											}
+											placeholder="Назва кольору"
+											disabled={isLoadingCreate || isLoadingUpdate}
 											{...field}
 										/>
 									</FormControl>
@@ -97,20 +87,17 @@ export function ColorForm({ color }: ColorFormProps) {
 						/>
 						<FormField
 							control={form.control}
-							name='value'
+							name="value"
 							rules={{
-								required: 'Значення обов\'язкове'
+								required: "Значення обов'язкове"
 							}}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Значення</FormLabel>
 									<FormControl>
 										<Input
-											placeholder='Значення кольору'
-											disabled={
-												isLoadingCreate ||
-												isLoadingUpdate
-											}
+											placeholder="Значення кольору"
+											disabled={isLoadingCreate || isLoadingUpdate}
 											{...field}
 										/>
 									</FormControl>
@@ -120,7 +107,7 @@ export function ColorForm({ color }: ColorFormProps) {
 						/>
 					</div>
 					<Button
-						variant='primary'
+						variant="primary"
 						disabled={isLoadingCreate || isLoadingUpdate}
 					>
 						{action}
@@ -128,5 +115,5 @@ export function ColorForm({ color }: ColorFormProps) {
 				</form>
 			</Form>
 		</div>
-	)
+	);
 }
