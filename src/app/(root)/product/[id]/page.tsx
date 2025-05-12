@@ -19,25 +19,23 @@ export async function generateStaticParams() {
 
 async function getProducts(params: { id: string }) {
 	try {
-		const product = await productService.getById(params.id);
-
-		const similarProducts = await productService.getSimilar(params.id);
-
+		const [product, similarProducts] = await Promise.all([
+			productService.getById(params.id),
+			productService.getSimilar(params.id)
+		]);
 		return { product, similarProducts };
 	} catch {
 		return notFound();
 	}
 }
 
-export async function generateMetadata(
-    props: {
-        params: Promise<{ id: string }>;
-    }
-): Promise<Metadata> {
-    const params = await props.params;
-    const { product } = await getProducts(params);
+export async function generateMetadata(props: {
+	params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+	const params = await props.params;
+	const { product } = await getProducts(params);
 
-    return {
+	return {
 		title: product.title,
 		description: product.description,
 		openGraph: {
@@ -53,15 +51,13 @@ export async function generateMetadata(
 	};
 }
 
-export default async function ProductPage(
-    props: {
-        params: Promise<{ id: string }>;
-    }
-) {
-    const params = await props.params;
-    const { product, similarProducts } = await getProducts(params);
+export default async function ProductPage(props: {
+	params: Promise<{ id: string }>;
+}) {
+	const params = await props.params;
+	const { product, similarProducts } = await getProducts(params);
 
-    return (
+	return (
 		<Product
 			initialProduct={product}
 			similarProducts={similarProducts}

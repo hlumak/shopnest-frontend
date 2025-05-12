@@ -1,16 +1,16 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { PUBLIC_URL } from '@/config/url.config'
+import { PUBLIC_URL } from '@/config/url.config';
 
-import { IProduct } from '@/shared/types/product.interface'
+import { IProduct } from '@/shared/types/product.interface';
 
-import { formatPrice } from '@/utils/string/format-price'
+import { formatPrice } from '@/utils/string/format-price';
 
-import styles from './ProductCard.module.scss'
+import styles from './ProductCard.module.scss';
 
 interface ProductCardProps {
-	product: IProduct
+	product: IProduct;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -22,6 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
 					alt={product.title}
 					width={300}
 					height={300}
+					priority={false}
 				/>
 			</Link>
 
@@ -34,5 +35,5 @@ export function ProductCard({ product }: ProductCardProps) {
 			</Link>
 			<p className={styles.price}>{formatPrice(product.price)}</p>
 		</div>
-	)
+	);
 }
