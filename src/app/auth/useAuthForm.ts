@@ -24,9 +24,6 @@ export function useAuthForm(isReg: boolean) {
 			form.reset();
 			toast.success('Успішна авторизація');
 			router.replace(DASHBOARD_URL.home());
-			setTimeout(() => {
-				window.location.href = DASHBOARD_URL.home();
-			}, 100);
 		},
 		onError(error) {
 			if (error.message) {
