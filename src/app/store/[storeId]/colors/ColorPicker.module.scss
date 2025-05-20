@@ -1,0 +1,11 @@
+.colorPickerWrapper {
+	@apply relative w-full max-w-[320px] mb-2;
+
+	.colorPreview {
+		@apply flex gap-4 items-center mb-3;
+
+		.colorBox {
+			@apply w-10 h-10 rounded-md border shadow-sm;
+		}
+	}
+}

@@ -47,7 +47,6 @@ export function ColorForm({ color }: ColorFormProps) {
 		}
 	});
 
-	// Ensure color value starts with # for the color picker
 	useEffect(() => {
 		const currentValue = form.getValues('value');
 		if (currentValue && !currentValue.startsWith('#')) {
@@ -56,7 +55,6 @@ export function ColorForm({ color }: ColorFormProps) {
 	}, [form]);
 
 	const onSubmit: SubmitHandler<IColorInput> = data => {
-		// Ensure the color value is properly formatted
 		const formattedData = {
 			...data,
 			value: data.value.startsWith('#') ? data.value : `#${data.value}`
@@ -121,18 +119,17 @@ export function ColorForm({ color }: ColorFormProps) {
 													placeholder="Значення кольору (HEX)"
 													disabled={isLoadingCreate || isLoadingUpdate}
 													{...field}
-													onChange={(e) => {
-														// Get the raw value from the input
+													onChange={e => {
 														let value = e.target.value;
 
-														// Check if input doesn't have # at the beginning
-														if (value && !value.startsWith('#') && value !== '') {
-															// Don't add # if user is trying to paste a full hex code
+														if (
+															value &&
+															!value.startsWith('#') &&
+															value !== ''
+														) {
 															if (!value.includes('#')) {
 																value = `#${value}`;
 															} else {
-																// If pasting a value with # not at the beginning,
-																// extract everything after # and prepend #
 																const hashIndex = value.indexOf('#');
 																if (hashIndex > 0) {
 																	value = `#${value.substring(hashIndex + 1)}`;
