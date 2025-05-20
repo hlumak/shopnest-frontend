@@ -1,4 +1,6 @@
 import { Trash } from 'lucide-react';
+import { useEffect } from 'react';
+import { HexColorPicker } from 'react-colorful';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/Button';
@@ -41,13 +43,27 @@ export function ColorForm({ color }: ColorFormProps) {
 		mode: 'onChange',
 		values: {
 			name: color?.name || '',
-			value: color?.value || ''
+			value: color?.value || '#000000'
 		}
 	});
 
+	// Ensure color value starts with # for the color picker
+	useEffect(() => {
+		const currentValue = form.getValues('value');
+		if (currentValue && !currentValue.startsWith('#')) {
+			form.setValue('value', `#${currentValue}`);
+		}
+	}, [form]);
+
 	const onSubmit: SubmitHandler<IColorInput> = data => {
-		if (color) updateColor(data);
-		else createColor(data);
+		// Ensure the color value is properly formatted
+		const formattedData = {
+			...data,
+			value: data.value.startsWith('#') ? data.value : `#${data.value}`
+		};
+
+		if (color) updateColor(formattedData);
+		else createColor(formattedData);
 	};
 
 	return (
@@ -73,7 +89,7 @@ export function ColorForm({ color }: ColorFormProps) {
 							}}
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Название</FormLabel>
+									<FormLabel>Назва</FormLabel>
 									<FormControl>
 										<Input
 											placeholder="Назва кольору"
@@ -94,13 +110,47 @@ export function ColorForm({ color }: ColorFormProps) {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Значення</FormLabel>
-									<FormControl>
-										<Input
-											placeholder="Значення кольору"
-											disabled={isLoadingCreate || isLoadingUpdate}
-											{...field}
+									<div className="flex flex-col gap-4">
+										<div className="flex gap-4 items-center">
+											<div
+												className="w-10 h-10 rounded-md border shadow-sm"
+												style={{ backgroundColor: field.value }}
+											/>
+											<FormControl>
+												<Input
+													placeholder="Значення кольору (HEX)"
+													disabled={isLoadingCreate || isLoadingUpdate}
+													{...field}
+													onChange={(e) => {
+														// Get the raw value from the input
+														let value = e.target.value;
+
+														// Check if input doesn't have # at the beginning
+														if (value && !value.startsWith('#') && value !== '') {
+															// Don't add # if user is trying to paste a full hex code
+															if (!value.includes('#')) {
+																value = `#${value}`;
+															} else {
+																// If pasting a value with # not at the beginning,
+																// extract everything after # and prepend #
+																const hashIndex = value.indexOf('#');
+																if (hashIndex > 0) {
+																	value = `#${value.substring(hashIndex + 1)}`;
+																}
+															}
+														}
+
+														field.onChange(value);
+													}}
+												/>
+											</FormControl>
+										</div>
+										<HexColorPicker
+											color={field.value}
+											onChange={field.onChange}
+											className="w-full max-w-[320px]"
 										/>
-									</FormControl>
+									</div>
 									<FormMessage />
 								</FormItem>
 							)}
