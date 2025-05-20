@@ -16,7 +16,7 @@ export function Home({ products }: HomeProps) {
 			<Hero />
 			<Catalog
 				title="Хіти продаж"
-				description="Самі популярні товари нашого магазину."
+				description="Самі популярні товари"
 				linkTitle="Дізнатися більше"
 				link={PUBLIC_URL.explorer()}
 				products={products}

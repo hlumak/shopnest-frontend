@@ -38,7 +38,7 @@ export function Navigation() {
 		{
 			icon: PaintBucket,
 			link: STORE_URL.colors(params.storeId),
-			value: 'Кольора'
+			value: 'Кольори'
 		},
 		{
 			icon: Star,

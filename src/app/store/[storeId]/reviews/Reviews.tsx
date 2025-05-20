@@ -35,7 +35,7 @@ export function Reviews() {
 					<div className={styles.header}>
 						<Heading
 							title={`Відгуки (${reviews?.length})`}
-							description="Усі відгуки в нашому магазині"
+							description="Усі відгуки у вашому магазині"
 						/>
 					</div>
 					<div className={styles.table}>
