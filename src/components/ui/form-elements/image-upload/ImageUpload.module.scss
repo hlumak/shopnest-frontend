@@ -1,17 +1,27 @@
 .image_container {
 	@apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-5;
 
-	> .image_wrapper {
+	>.image_wrapper {
 		@apply relative w-[200px] h-[200px] rounded-md overflow-hidden;
 
-		> img {
+		>img {
 			@apply object-cover;
 		}
 	}
 }
 
 .upload {
-	> svg {
+	>svg {
 		@apply size-4 mr-2;
 	}
+}
+
+.remove_btn {
+	@apply absolute top-2 right-2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors duration-150;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+	border: none;
+	cursor: pointer;
 }

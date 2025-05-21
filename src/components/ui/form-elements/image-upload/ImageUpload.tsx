@@ -1,4 +1,4 @@
-import { ImagePlus } from 'lucide-react';
+import { ImagePlus, X } from 'lucide-react';
 import Image from 'next/image';
 
 import { cn } from '@/utils/clsx';
@@ -16,7 +16,11 @@ interface ImageUploadProps {
 
 export function ImageUpload({ isDisabled, onChange, value }: ImageUploadProps) {
 	const { handleButtonClick, isUploading, fileInputRef, handleFileChange } =
-		useUpload(onChange);
+		useUpload(onChange, value);
+
+	const handleRemove = (url: string) => {
+		onChange(value.filter(img => img !== url));
+	};
 
 	return (
 		<div>
@@ -24,6 +28,14 @@ export function ImageUpload({ isDisabled, onChange, value }: ImageUploadProps) {
 				{value.map(url => (
 					<div key={url} className={styles.image_wrapper}>
 						<Image src={url} alt="Картинка" fill />
+						<button
+							type="button"
+							className={styles.remove_btn}
+							disabled={isDisabled || isUploading}
+							onClick={() => handleRemove(url)}
+						>
+							<X className="size-4" />
+						</button>
 					</div>
 				))}
 			</div>
@@ -41,6 +53,7 @@ export function ImageUpload({ isDisabled, onChange, value }: ImageUploadProps) {
 			</Button>
 			<input
 				type="file"
+				accept="image/webp"
 				multiple
 				className="hidden"
 				ref={fileInputRef}
