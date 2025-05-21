@@ -64,7 +64,7 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 	});
 
 	const onSubmit: SubmitHandler<IProductInput> = data => {
-		data.price = Number(data.price);
+		data.price = Number(String(data.price).replace(',', '.'));
 		if (product) updateProduct(data);
 		else createProduct(data);
 	};
@@ -137,6 +137,7 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 										<Input
 											placeholder="Ціна товару"
 											disabled={isLoadingCreate || isLoadingUpdate}
+											inputMode="decimal"
 											{...field}
 										/>
 									</FormControl>
