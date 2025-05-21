@@ -6,7 +6,8 @@ import { fileService } from '@/services/file.service';
 
 export function useUpload(
 	onChange: (value: string[]) => void,
-	currentValue: string[]
+	currentValue: () => string[],
+	onImagesUploaded?: (urls: string[]) => void
 ) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -14,7 +15,9 @@ export function useUpload(
 		mutationKey: ['upload files'],
 		mutationFn: (formData: FormData) => fileService.upload(formData),
 		onSuccess(data) {
-			onChange([...currentValue, ...data.map(file => file.url)]);
+			const urls = data.map(file => file.url);
+			onChange([...currentValue(), ...urls]);
+			if (onImagesUploaded) onImagesUploaded(urls);
 		},
 		onError() {
 			toast.error('Помилка при завантаженні файлів');

@@ -1,10 +1,10 @@
-import { axiosWithAuth } from '@/api/api.interceptors'
+import { axiosWithAuth } from '@/api/api.interceptors';
 
-import { API_URL } from '@/config/api.config'
+import { API_URL } from '@/config/api.config';
 
 interface IFile {
-	url: string
-	name: string
+	url: string;
+	name: string;
 }
 
 class FileService {
@@ -19,10 +19,19 @@ class FileService {
 			headers: {
 				'Content-Type': 'multipart/form-data'
 			}
-		})
+		});
 
-		return data
+		return data;
+	}
+
+	async deleteFile(folder: string, filename: string) {
+		const { data } = await axiosWithAuth({
+			url: API_URL.files() + `/uploads/${folder}/${filename}`,
+			method: 'DELETE'
+		});
+
+		return data;
 	}
 }
 
-export const fileService = new FileService()
+export const fileService = new FileService();

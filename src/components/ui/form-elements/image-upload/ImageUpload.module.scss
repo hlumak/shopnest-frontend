@@ -7,6 +7,20 @@
 		>img {
 			@apply object-cover;
 		}
+
+		&.dragging {
+			outline: 2px solid #3b82f6; // blue-500
+			outline-offset: 2px;
+			box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+			opacity: 0.5;
+			z-index: 10;
+		}
+
+		&.drag-over {
+			outline: 2px dashed #3b82f6;
+			outline-offset: 2px;
+			background: rgba(59, 130, 246, 0.08);
+		}
 	}
 }
 

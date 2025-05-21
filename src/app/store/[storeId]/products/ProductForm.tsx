@@ -1,5 +1,7 @@
 import { Trash } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 import { Button } from '@/components/ui/Button';
 import { Heading } from '@/components/ui/Heading';
@@ -27,6 +29,8 @@ import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
 import { useCreateProduct } from '@/hooks/queries/products/useCreateProduct';
 import { useDeleteProduct } from '@/hooks/queries/products/useDeleteProduct';
 import { useUpdateProduct } from '@/hooks/queries/products/useUpdateProduct';
+
+import { fileService } from '@/services/file.service';
 
 import { ICategory } from '@/shared/types/category.interface';
 import { IColor } from '@/shared/types/color.interface';
@@ -63,11 +67,57 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 		}
 	});
 
-	const onSubmit: SubmitHandler<IProductInput> = data => {
+	const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+	const [removedImages, setRemovedImages] = useState<string[]>([]);
+	const isSaved = useRef(false);
+
+	const handleMarkRemove = (url: string) => {
+		setRemovedImages(prev => [...prev, url]);
+		setUploadedImages(prev => prev.filter(img => img !== url));
+	};
+
+	const handleImagesUploaded = (urls: string[]) => {
+		setUploadedImages(prev => [...prev, ...urls]);
+	};
+
+	const onSubmit: SubmitHandler<IProductInput> = async data => {
 		data.price = Number(String(data.price).replace(',', '.'));
+		for (const url of removedImages) {
+			try {
+				const fileName = url.split('/').pop();
+
+				if (fileName) {
+					await fileService.deleteFile('products', fileName);
+				}
+			} catch (e) {
+				console.error(e);
+				toast.error('Помилка при видаленні картинки');
+			}
+		}
+		setRemovedImages([]);
+		isSaved.current = true;
 		if (product) updateProduct(data);
 		else createProduct(data);
 	};
+
+	useEffect(() => {
+		return () => {
+			if (!isSaved.current && uploadedImages.length) {
+				// Удаляем только те картинки, которые не используются в value (т.е. не остались в форме)
+				const unused = uploadedImages.filter(url => !form.getValues('images').includes(url));
+				unused.forEach(async url => {
+					try {
+						const fileName = url.split('/').pop();
+						if (fileName) {
+							await fileService.deleteFile('products', fileName);
+						}
+					} catch (e) {
+						console.error('Не вдалося видалити неиспользуемое зображення', url);
+					}
+				});
+			}
+		};
+	}, [uploadedImages]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -97,6 +147,9 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 										isDisabled={isLoadingCreate || isLoadingUpdate}
 										onChange={field.onChange}
 										value={field.value}
+										onMarkRemove={handleMarkRemove}
+										onImagesUploaded={handleImagesUploaded}
+										uploadedImages={uploadedImages}
 									/>
 								</FormControl>
 								<FormMessage />
