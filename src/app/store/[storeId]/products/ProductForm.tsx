@@ -1,5 +1,5 @@
 import { Trash } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -99,25 +99,6 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 		if (product) updateProduct(data);
 		else createProduct(data);
 	};
-
-	useEffect(() => {
-		return () => {
-			if (!isSaved.current && uploadedImages.length) {
-				// Удаляем только те картинки, которые не используются в value (т.е. не остались в форме)
-				const unused = uploadedImages.filter(url => !form.getValues('images').includes(url));
-				unused.forEach(async url => {
-					try {
-						const fileName = url.split('/').pop();
-						if (fileName) {
-							await fileService.deleteFile('products', fileName);
-						}
-					} catch (e) {
-						console.error('Не вдалося видалити неиспользуемое зображення', url);
-					}
-				});
-			}
-		};
-	}, [uploadedImages]);
 
 	return (
 		<div className={styles.wrapper}>
