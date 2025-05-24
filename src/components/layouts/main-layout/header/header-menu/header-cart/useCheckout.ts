@@ -20,7 +20,7 @@ export const useCheckout = () => {
 		mutationFn: () =>
 			orderService.place({
 				items: items.map(item => ({
-					price: +item.price,
+					price: item.product.price,
 					quantity: item.quantity,
 					productId: item.product.id,
 					storeId: item.product.storeId

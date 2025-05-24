@@ -27,8 +27,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
 					? removeFromCart({ id: currentElement.id })
 					: addToCart({
 							product,
-							quantity: 1,
-							price: product.price
+							quantity: 1
 						})
 			}
 		>
