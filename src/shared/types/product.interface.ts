@@ -6,7 +6,7 @@ export interface IProduct {
 	id: string
 	title: string
 	description: string
-	price: number
+	price: string | number
 	images: string[]
 	category: ICategory
 	reviews: IReview[]
@@ -21,4 +21,5 @@ export interface IProductInput
 	> {
 	categoryId: string
 	colorId: string
+	price: string | number
 }

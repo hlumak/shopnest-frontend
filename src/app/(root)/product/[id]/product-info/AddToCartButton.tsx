@@ -5,6 +5,8 @@ import { useCart } from '@/hooks/useCart';
 
 import { IProduct } from '@/shared/types/product.interface';
 
+import { DecimalUtils } from '@/utils/decimal/decimal-utils';
+
 interface AddToCartButtonProps {
 	product: IProduct;
 }
@@ -26,10 +28,10 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
 				currentElement
 					? removeFromCart({ id: currentElement.id })
 					: addToCart({
-							product,
-							quantity: 1,
-							price: product.price
-						})
+						product,
+						quantity: 1,
+						price: DecimalUtils.toString(product.price)
+					})
 			}
 		>
 			{currentElement ? 'Видалити з корзини' : 'Додати в корзину'}

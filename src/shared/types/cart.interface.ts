@@ -4,5 +4,5 @@ export interface ICartItem {
 	id: number
 	product: IProduct
 	quantity: number
-	price: number
+	price: string | number
 }

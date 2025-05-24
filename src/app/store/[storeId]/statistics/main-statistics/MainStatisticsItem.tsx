@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 
 import { IMainStatistics } from '@/shared/types/statistics.interface'
 
+import { DecimalUtils } from '@/utils/decimal/decimal-utils'
 import { formatPrice } from '@/utils/string/format-price'
 
 import styles from './MainStatistics.module.scss'
@@ -15,6 +16,7 @@ interface MainStatisticsItemProps {
 
 export function MainStatisticsItem({ item }: MainStatisticsItemProps) {
 	const Icon = getIcon(item.id)
+	const numericValue = DecimalUtils.toNumber(item.value)
 
 	return (
 		<Card className={styles.card}>
@@ -25,9 +27,9 @@ export function MainStatisticsItem({ item }: MainStatisticsItemProps) {
 			<CardContent className={styles.content}>
 				<h2>
 					{item.id !== 1 ? (
-						<CountUp end={item.value} />
+						<CountUp end={numericValue} />
 					) : (
-						<CountUp end={item.value} formattingFn={formatPrice} />
+						<CountUp end={numericValue} formattingFn={formatPrice} />
 					)}
 				</h2>
 			</CardContent>

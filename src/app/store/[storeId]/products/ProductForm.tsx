@@ -36,6 +36,8 @@ import { ICategory } from '@/shared/types/category.interface';
 import { IColor } from '@/shared/types/color.interface';
 import { IProduct, IProductInput } from '@/shared/types/product.interface';
 
+import { DecimalUtils } from '@/utils/decimal/decimal-utils';
+
 import styles from '../Store.module.scss';
 
 interface ProductFormProps {
@@ -61,7 +63,7 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 			title: product?.title || '',
 			description: product?.description || '',
 			images: product?.images || [],
-			price: product?.price || 0,
+			price: product?.price || '',
 			categoryId: product?.category.id || '',
 			colorId: product?.color.id || ''
 		}
@@ -81,7 +83,14 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 	};
 
 	const onSubmit: SubmitHandler<IProductInput> = async data => {
-		data.price = Number(String(data.price).replace(',', '.'));
+		// Validate and normalize price for Decimal compatibility
+		if (!DecimalUtils.isValid(String(data.price))) {
+			toast.error('Невірний формат ціни');
+			return;
+		}
+
+		data.price = DecimalUtils.toString(data.price);
+
 		for (const url of removedImages) {
 			try {
 				const fileName = url.split('/').pop();
@@ -162,14 +171,25 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 							control={form.control}
 							name="price"
 							rules={{
-								required: "Ціна обов'зякова"
+								required: "Ціна обов'язкова",
+								validate: value => {
+									const stringValue = String(value);
+									if (!DecimalUtils.isValid(stringValue)) {
+										return 'Введіть коректну ціну (тільки числа)';
+									}
+									const numericValue = DecimalUtils.toNumber(stringValue);
+									if (numericValue <= 0) {
+										return 'Ціна повинна бути більше 0';
+									}
+									return true;
+								}
 							}}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Ціна</FormLabel>
 									<FormControl>
 										<Input
-											placeholder="Ціна товару"
+											placeholder="Ціна товару (наприклад: 100.50)"
 											disabled={isLoadingCreate || isLoadingUpdate}
 											inputMode="decimal"
 											{...field}

@@ -1,12 +1,12 @@
 export interface IMainStatistics {
 	id: number
 	name: string
-	value: number
+	value: string | number
 }
 
 export interface IMonthlySales {
 	date: string
-	value: number
+	value: string | number
 }
 
 export interface ILastUsers {
@@ -14,7 +14,7 @@ export interface ILastUsers {
 	name: string
 	email: string
 	picture: string
-	total: number
+	total: string | number
 }
 
 export interface IMiddleStatistics {

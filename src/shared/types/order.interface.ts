@@ -16,7 +16,8 @@ export interface IPaymentResponse {
 
 export enum EnumOrderStatus {
 	PENDING = 'PENDING',
-	PAYED = 'PAYED'
+	PAID = 'PAID',
+	FAILED = 'FAILED'
 }
 
 export interface IOrder {
@@ -25,5 +26,5 @@ export interface IOrder {
 	items: ICartItem[];
 	status: EnumOrderStatus;
 	user: IUser;
-	total: number;
+	total: string | number;
 }

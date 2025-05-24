@@ -11,7 +11,7 @@ type TypeData = {
 	status?: EnumOrderStatus
 	items: {
 		quantity: number
-		price: number
+		price: string | number
 		productId: string
 		storeId: string
 	}[]

@@ -10,6 +10,7 @@ import {
 
 import { IMonthlySales } from '@/shared/types/statistics.interface';
 
+import { DecimalUtils } from '@/utils/decimal/decimal-utils';
 import { formatPrice } from '@/utils/string/format-price';
 
 import styles from './MiddleStatistics.module.scss';
@@ -26,6 +27,16 @@ interface OverviewProps {
 }
 
 export function Overview({ data }: OverviewProps) {
+	// Преобразуем данные для графика в числовой формат
+	const chartData = data.map(item => ({
+		...item,
+		value: DecimalUtils.toNumber(item.value)
+	}));
+
+	const customTooltipFormatter = (value: any) => {
+		return formatPrice(value);
+	};
+
 	return (
 		<Card>
 			<CardHeader className={styles.header}>
@@ -38,7 +49,7 @@ export function Overview({ data }: OverviewProps) {
 				>
 					<AreaChart
 						accessibilityLayer
-						data={data}
+						data={chartData}
 						margin={{
 							left: 12,
 							right: 12
@@ -54,7 +65,7 @@ export function Overview({ data }: OverviewProps) {
 						<ChartTooltip
 							content={
 								<ChartTooltipContent
-									labelFormatter={formatPrice}
+									formatter={customTooltipFormatter}
 									indicator="line"
 								/>
 							}

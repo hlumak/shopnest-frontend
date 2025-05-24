@@ -8,6 +8,8 @@ import { useCart } from '@/hooks/useCart';
 
 import { orderService } from '@/services/order.service';
 
+import { DecimalUtils } from '@/utils/decimal/decimal-utils';
+
 export const useCheckout = () => {
 	const { items } = useCart();
 
@@ -20,7 +22,7 @@ export const useCheckout = () => {
 		mutationFn: () =>
 			orderService.place({
 				items: items.map(item => ({
-					price: item.price,
+					price: DecimalUtils.toString(item.price),
 					quantity: item.quantity,
 					productId: item.product.id,
 					storeId: item.product.storeId
