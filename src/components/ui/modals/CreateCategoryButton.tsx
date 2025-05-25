@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -24,7 +23,7 @@ import {
 } from '@/components/ui/form-elements/Form';
 import { Input } from '@/components/ui/form-elements/Input';
 
-import { useCreateCategory } from '@/hooks/queries/categories/useCreateCategory';
+import { useCreateCategoryModal } from '@/hooks/queries/categories/useCreateCategoryModal';
 
 import { ICategoryInput } from '@/shared/types/category.interface';
 
@@ -34,8 +33,7 @@ interface CreateCategoryButtonProps {
 
 export function CreateCategoryButton({ onSuccess }: CreateCategoryButtonProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const { createCategory, isLoadingCreate } = useCreateCategory();
-	const queryClient = useQueryClient();
+	const { createCategory, isLoadingCreate } = useCreateCategoryModal();
 
 	const form = useForm<ICategoryInput>({
 		mode: 'onChange',
@@ -49,9 +47,6 @@ export function CreateCategoryButton({ onSuccess }: CreateCategoryButtonProps) {
 		createCategory(data);
 		setIsOpen(false);
 		form.reset();
-		queryClient.invalidateQueries({
-			queryKey: ['get categories for store dashboard']
-		});
 		onSuccess?.();
 	};
 

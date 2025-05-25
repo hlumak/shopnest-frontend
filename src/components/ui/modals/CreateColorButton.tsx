@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
@@ -24,7 +23,7 @@ import {
 } from '@/components/ui/form-elements/Form';
 import { Input } from '@/components/ui/form-elements/Input';
 
-import { useCreateColor } from '@/hooks/queries/colors/useCreateColor';
+import { useCreateColorModal } from '@/hooks/queries/colors/useCreateColorModal';
 
 import { IColorInput } from '@/shared/types/color.interface';
 
@@ -34,8 +33,7 @@ interface CreateColorButtonProps {
 
 export function CreateColorButton({ onSuccess }: CreateColorButtonProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const { createColor, isLoadingCreate } = useCreateColor();
-	const queryClient = useQueryClient();
+	const { createColor, isLoadingCreate } = useCreateColorModal();
 
 	const form = useForm<IColorInput>({
 		mode: 'onChange',
@@ -61,9 +59,6 @@ export function CreateColorButton({ onSuccess }: CreateColorButtonProps) {
 		createColor(formattedData);
 		setIsOpen(false);
 		form.reset({ name: '', value: '#000000' });
-		queryClient.invalidateQueries({
-			queryKey: ['get colors for store dashboard']
-		});
 		onSuccess?.();
 	};
 
