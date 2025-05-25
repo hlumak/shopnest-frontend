@@ -1,7 +1,15 @@
 .logo {
 	@apply flex items-center gap-x-3 hover:opacity-75 transition-opacity;
 
-	> div {
+	>.logo_text {
 		@apply text-2xl font-bold text-blue-600;
+	}
+}
+
+@media (max-width: 640px) {
+	.logo {
+		>.logo_text {
+			@apply hidden;
+		}
 	}
 }
