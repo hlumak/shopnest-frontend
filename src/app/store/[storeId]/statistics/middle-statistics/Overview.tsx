@@ -27,7 +27,6 @@ interface OverviewProps {
 }
 
 export function Overview({ data }: OverviewProps) {
-	// Преобразуем данные для графика в числовой формат
 	const chartData = data.map(item => ({
 		...item,
 		value: DecimalUtils.toNumber(item.value)

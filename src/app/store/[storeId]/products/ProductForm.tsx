@@ -25,7 +25,11 @@ import {
 import { Input } from '@/components/ui/form-elements/Input';
 import { ImageUpload } from '@/components/ui/form-elements/image-upload/ImageUpload';
 import { ConfirmModal } from '@/components/ui/modals/ConfirmModal';
+import { CreateCategoryButton } from '@/components/ui/modals/CreateCategoryButton';
+import { CreateColorButton } from '@/components/ui/modals/CreateColorButton';
 
+import { useGetCategories } from '@/hooks/queries/categories/useGetCategories';
+import { useGetColors } from '@/hooks/queries/colors/useGetColors';
 import { useCreateProduct } from '@/hooks/queries/products/useCreateProduct';
 import { useDeleteProduct } from '@/hooks/queries/products/useDeleteProduct';
 import { useUpdateProduct } from '@/hooks/queries/products/useUpdateProduct';
@@ -46,10 +50,19 @@ interface ProductFormProps {
 	colors: IColor[];
 }
 
-export function ProductForm({ product, categories, colors }: ProductFormProps) {
+export function ProductForm({
+	product,
+	categories: initialCategories,
+	colors: initialColors
+}: ProductFormProps) {
 	const { createProduct, isLoadingCreate } = useCreateProduct();
 	const { updateProduct, isLoadingUpdate } = useUpdateProduct();
 	const { deleteProduct, isLoadingDelete } = useDeleteProduct();
+	const { categories } = useGetCategories();
+	const { colors } = useGetColors();
+
+	const categoriesList = categories || initialCategories;
+	const colorsList = colors || initialColors;
 
 	const title = product ? 'Змінити дані' : 'Створити товар';
 	const description = product
@@ -83,7 +96,6 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 	};
 
 	const onSubmit: SubmitHandler<IProductInput> = async data => {
-		// Validate and normalize price for Decimal compatibility
 		if (!DecimalUtils.isValid(String(data.price))) {
 			toast.error('Невірний формат ціни');
 			return;
@@ -220,7 +232,8 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 										</FormControl>
 										<SelectContent>
 											<SelectGroup>
-												{categories.map(category => (
+												<CreateCategoryButton />
+												{categoriesList.map(category => (
 													<SelectItem value={category.id} key={category.id}>
 														{category.title}
 													</SelectItem>
@@ -255,7 +268,8 @@ export function ProductForm({ product, categories, colors }: ProductFormProps) {
 										</FormControl>
 										<SelectContent>
 											<SelectGroup>
-												{colors.map(color => (
+												<CreateColorButton />
+												{colorsList.map(color => (
 													<SelectItem value={color.id} key={color.id}>
 														{color.name}
 													</SelectItem>
